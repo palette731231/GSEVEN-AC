@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>集雅社｜居家空調熱負荷精密評估報告</title>
+    <style>
+        :root {
+            --primary-blue: #0A192F;
+            --accent-gold: #C5A059;
+            --light-gold: #F4EBD0;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background-color: #F0F0F0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* A4 規格設定 */
+        .a4-page {
+            width: 210mm;
+            height: 296mm;
+            background: var(--white);
+            padding: 12mm 15mm;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .brand-logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            letter-spacing: 5px;
+        }
+
+        .doc-subtitle {
+            font-size: 18px;
+            color: var(--primary-blue);
+            margin: 5px 0;
+            font-weight: 500;
+        }
+
+        .intro-text {
+            background-color: var(--light-gold);
+            padding: 12px 18px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--accent-gold);
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--white);
+            background: var(--primary-blue);
+            padding: 8px 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .calc-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-card {
+            border: 1px solid #EEE;
+            padding: 12px;
+            border-radius: 5px;
+            background: #FAFAFA;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .size-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #CCC;
+            font-size: 15px;
+            border-radius: 3px;
+        }
+
+        .factor-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .factor-table td {
+            padding: 10px 5px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .result-zone {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: auto;
+        }
+
+        .final-kw {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin: 10px 0;
+        }
+
+        .buying-guide {
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #777;
+            padding-top: 10px;
+            border-top: 1px solid #EEE;
+            margin-top: 10px;
+        }
+
+        .btn-print {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .a4-page { box-shadow: none; border: none; margin: 0; width: 210mm; height: 296mm; }
+            .btn-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="btn-print" onclick="window.print()">匯出評估單</button>
+
+<div class="a4-page">
+    <header>
+        <div class="brand-logo">集雅社</div>
+        <div class="doc-subtitle">消費者空調需求評估問卷</div>
+    </header>
+
+    <div class="intro-text">
+        <strong>買冷氣不只有「建議坪數」或「越大台越好」！</strong> 集雅社提醒您，冷氣的核心價值在於達成空間的<strong>熱焓平衡</strong>。忽視西曬、頂樓等熱負荷將導致無法有效降溫，電費激增，本問卷評估採市面10大空調品牌之建議係數均值計算，僅供參考。
+    </div>
+
+    <div class="section-title">
+        <span>第一部分：空間基礎數據量測</span>
+        <span style="font-size: 11px; font-weight: normal;">STEP 01</span>
+    </div>
+
+    <div class="calc-container">
+        <div class="input-card">
+            <label>📏 空間尺寸換算 (M)</label>
+            <div class="size-row">
+                長 <input type="number" id="len" placeholder="米" oninput="autoPing()"> 
+                × 寬 <input type="number" id="wid" placeholder="米" oninput="autoPing()">
+            </div>
+        </div>
+        <div class="input-card">
+            <label>確認最終坪數</label>
+            <input type="number" id="ping" style="width: 100%;" oninput="mainCalc()">
+            <div style="margin-top: 10px; font-size: 12px; color: var(--primary-blue);">
+                基礎冷房能力: <strong id="baseA">0.00</strong> kW
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <span>第二部分：環境熱負荷精密修正</span>
+        <span style="font-size: 11px; font-weight: normal;">STEP 02</span>
+    </div>
+
+    <div class="input-card" style="padding: 5px 15px;">
+        <table class="factor-table">
+            <tr>
+                <td width="40"><input type="checkbox" class="adj" value="0.3" onchange="mainCalc()"></td>
+                <td><strong>頂樓且無遮蔽物</strong> (受太陽直射屋頂)</td>
+                <td align="right" style="color:var(--accent-gold)">+30%</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="adj" value="0.2" onchange="mainCalc()"></td>
+                <td><strong>嚴重西曬問題</strong> (可與上題擇一斟酌填寫)</td>
+                <td align="right" style="color:var(--accent-gold)">+20%</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="adj" value="0.1" onchange="mainCalc()"></td>
+                <td><strong>大面落地窗或玻璃帷幕</strong> (無隔熱紙/簾)</td>
+                <td align="right" style="color:var(--accent-gold)">+10%</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="adj" value="0.15" onchange="mainCalc()"></td>
+                <td><strong>開放式格局</strong> (如連通空間、廚房)</td>
+                <td align="right" style="color:var(--accent-gold)">+15%</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="adj" value="0.15" onchange="mainCalc()"></td>
+                <td><strong>室內高發熱源</strong> (如電腦、長期4人以上)</td>
+                <td align="right" style="color:var(--accent-gold)">+15%</td>
+            </tr>
+        </table>
+        <p style="font-size: 11px; color: #D9534F; margin: 10px 0;">
+            ※ 若為營業場所空間，因考量多方因素，建議請先安排現場勘查。
+        </p>
+    </div>
+
+    <div class="result-zone">
+        <div style="letter-spacing: 3px; font-size: 15px; opacity: 0.9;">建議配置總能力需求</div>
+        <div class="final-kw"><span id="total">0.00</span> <small style="font-size: 20px;">kW</small></div>
+        <div class="buying-guide">
+            </strong> 極端天氣越來越熱，請選擇規格中<strong>「額定冷氣能力」大於 或 等於</strong> 此總需求的機種。<br>
+            <span style="font-size: 12px; color: var(--accent-gold); display: block; margin-top: 5px;">「拒絕灌水，也要追求平衡」— 規劃合宜配置，讓人心情愉悅。</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <strong>集雅社｜集優雅之大成，設舒適之居家</strong><br>
+        本評估數據僅供參考，規劃冷房配置請務必符合此建議，實際安裝細節請洽門市專業顧問。
+    </div>
+</div>
+<script>
+    // 自動換算坪數
+    function autoPing() {
+        const l = parseFloat(document.getElementById('len').value) || 0;
+        const w = parseFloat(document.getElementById('wid').value) || 0;
+        // 來源公式：長*寬*0.3025
+        const p = (l * w * 0.3025).toFixed(2);
+        document.getElementById('ping').value = p;
+        mainCalc();
+    }
+
+    // 主動精密計算
+    function mainCalc() {
+        // 來源公式：基礎能力 A = 坪數 * 0.66
+        const ping = parseFloat(document.getElementById('ping').value) || 0;
+        const baseA = ping * 0.66;
+        document.getElementById('baseA').innerText = baseA.toFixed(2);
+
+        // 來源係數：第二部分加總 % 數 (B)
+        let bonusB = 0;
+        const adjs = document.querySelectorAll('.adj');
+        adjs.forEach(cb => {
+            if (cb.checked) bonusB += parseFloat(cb.value);
+        });
+
+        // 來源總公式：建議 kW = A * (100% + B)
+        const total = (baseA * (1 + bonusB)).toFixed(2);
+        document.getElementById('total').innerText = total;
+    }
+</script>
+
+</body>
+</html>
